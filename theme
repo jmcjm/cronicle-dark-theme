@@ -1,0 +1,389 @@
+// ==UserScript==
+// @name         Dark Theme dla Cronicle
+// @namespace    http://tampermonkey.net/
+// @version      2.0
+// @description  Modern dark theme for Cronicle
+// @author       jmcjm
+// @match        your cronicle url
+// @grant        GM_addStyle
+// @run-at       document-start
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    const darkCSS = `
+/* Premium Dark Theme - Modern & Clean */
+
+body.dark {
+    --body-background-color: #0d1117 !important;
+    --background-color: #161b22 !important;
+    --border-color: #30363d !important;
+    --dialog-background-color: #1c2128 !important;
+    --box-background-color: #21262d !important;
+    --header-text-color: #8b949e !important;
+    --body-text-color: #c9d1d9 !important;
+    --label-color: #7d8590 !important;
+    --highlight-color: #58a6ff !important;
+    --success-color: #3fb950 !important;
+    --warning-color: #d29922 !important;
+    --error-color: #f85149 !important;
+}
+
+/* Smooth transitions */
+body.dark * {
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease !important;
+}
+
+/* Input elements with glow */
+body.dark input,
+body.dark textarea,
+body.dark select {
+    background-color: var(--box-background-color) !important;
+    color: var(--body-text-color) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 6px !important;
+    padding: 8px 12px !important;
+}
+
+body.dark input:focus,
+body.dark textarea:focus,
+body.dark select:focus {
+    border-color: var(--highlight-color) !important;
+    box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.15) !important;
+    outline: none !important;
+}
+
+body.dark input::placeholder,
+body.dark textarea::placeholder {
+    color: rgba(125, 133, 144, 0.6) !important;
+}
+
+/* Modern buttons with gradient hover */
+body.dark .button {
+    background: linear-gradient(180deg, #21262d 0%, #1c2128 100%) !important;
+    color: var(--body-text-color) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 6px !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+body.dark .button:hover {
+    background: linear-gradient(180deg, #30363d 0%, #21262d 100%) !important;
+    border-color: #484f58 !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4) !important;
+    transform: translateY(-1px) !important;
+}
+
+body.dark .button:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Tables with subtle shadows */
+body.dark .data_table {
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+body.dark .data_table tr th {
+    background: linear-gradient(180deg, #21262d 0%, #1c2128 100%) !important;
+    color: var(--label-color) !important;
+    border-bottom: 2px solid var(--border-color) !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    font-size: 11px !important;
+    letter-spacing: 0.5px !important;
+}
+
+body.dark .data_table tr td {
+    background: var(--background-color) !important;
+    border-bottom: 1px solid #21262d !important;
+}
+
+body.dark .data_table tr:hover td {
+    background: #1c2128 !important;
+}
+
+/* Tabs with modern look */
+body.dark .tab.inactive {
+    background: transparent !important;
+    border-color: transparent !important;
+    color: var(--label-color) !important;
+}
+
+body.dark .tab.inactive:hover {
+    background: rgba(33, 38, 45, 0.5) !important;
+    color: var(--body-text-color) !important;
+}
+
+body.dark .tab.active {
+    background: var(--background-color) !important;
+    border-color: var(--border-color) !important;
+    border-bottom-color: var(--background-color) !important;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+body.dark .tab.active .content {
+    color: var(--highlight-color) !important;
+    font-weight: 600 !important;
+}
+
+/* Fieldsets with depth */
+body.dark fieldset {
+    background: var(--box-background-color) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 8px !important;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+}
+
+body.dark legend {
+    color: var(--highlight-color) !important;
+    font-weight: 600 !important;
+    padding: 0 8px !important;
+}
+
+body.dark label {
+    color: var(--label-color) !important;
+    font-weight: 500 !important;
+}
+
+body.dark label:hover {
+    color: var(--highlight-color) !important;
+}
+
+/* Links with smooth color transition */
+body.dark a,
+body.dark a:visited,
+body.dark .link {
+    color: var(--highlight-color) !important;
+    text-decoration: none !important;
+}
+
+body.dark a:hover,
+body.dark .link:hover {
+    color: #79c0ff !important;
+    text-decoration: underline !important;
+}
+
+/* Main content area */
+body.dark .main {
+    background: var(--background-color) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Header with gradient */
+body.dark #d_header {
+    background: linear-gradient(180deg, #161b22 0%, #0d1117 100%) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+}
+
+/* Colored rows with better contrast */
+body.dark .data_table tr.red td {
+    background: linear-gradient(90deg, #461b1b 0%, #2d1212 100%) !important;
+    border-left: 3px solid var(--error-color) !important;
+}
+
+body.dark .data_table tr.green td {
+    background: linear-gradient(90deg, #1b4620 0%, #12291a 100%) !important;
+    border-left: 3px solid var(--success-color) !important;
+}
+
+body.dark .data_table tr.blue td {
+    background: linear-gradient(90deg, #1b2d46 0%, #12202d 100%) !important;
+    border-left: 3px solid var(--highlight-color) !important;
+}
+
+body.dark .data_table tr.yellow td {
+    background: linear-gradient(90deg, #46391b 0%, #2d2512 100%) !important;
+    border-left: 3px solid var(--warning-color) !important;
+}
+
+/* Modern message boxes */
+body.dark div.message {
+    border-radius: 8px !important;
+    border-left: 4px solid !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+body.dark div.message.success {
+    color: #7ee787 !important;
+    background: linear-gradient(135deg, #1b4620 0%, #12291a 100%) !important;
+    border-left-color: var(--success-color) !important;
+}
+
+body.dark div.message.warning {
+    color: #f0b72f !important;
+    background: linear-gradient(135deg, #46391b 0%, #2d2512 100%) !important;
+    border-left-color: var(--warning-color) !important;
+}
+
+body.dark div.message.error {
+    color: #ff7b72 !important;
+    background: linear-gradient(135deg, #461b1b 0%, #2d1212 100%) !important;
+    border-left-color: var(--error-color) !important;
+}
+
+/* Color labels with glow */
+body.dark span.color_label {
+    border-radius: 6px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+    font-weight: 600 !important;
+}
+
+body.dark span.color_label.blue {
+    background: linear-gradient(135deg, #1f6feb 0%, #0d419d 100%) !important;
+}
+
+body.dark span.color_label.green {
+    background: linear-gradient(135deg, #3fb950 0%, #2ea043 100%) !important;
+}
+
+body.dark span.color_label.yellow {
+    background: linear-gradient(135deg, #d29922 0%, #9e6a03 100%) !important;
+}
+
+body.dark span.color_label.red {
+    background: linear-gradient(135deg, #f85149 0%, #da3633 100%) !important;
+}
+
+body.dark span.color_label.purple {
+    background: linear-gradient(135deg, #a371f7 0%, #8957e5 100%) !important;
+}
+
+body.dark span.color_label.gray {
+    background: linear-gradient(135deg, #6e7681 0%, #57606a 100%) !important;
+}
+
+/* Progress bar with glow */
+body.dark div.progress_bar_container {
+    background-color: var(--box-background-color) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+}
+
+body.dark div.progress_bar_inner {
+    background: linear-gradient(90deg, #1f6feb 0%, #58a6ff 100%) !important;
+    box-shadow: 0 0 10px rgba(88, 166, 255, 0.5) !important;
+}
+
+/* Scrollbar styling */
+body.dark ::-webkit-scrollbar {
+    width: 12px !important;
+    height: 12px !important;
+}
+
+body.dark ::-webkit-scrollbar-track {
+    background: var(--body-background-color) !important;
+    border-radius: 6px !important;
+}
+
+body.dark ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #30363d 0%, #21262d 100%) !important;
+    border-radius: 6px !important;
+    border: 2px solid var(--body-background-color) !important;
+}
+
+body.dark ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #484f58 0%, #30363d 100%) !important;
+}
+
+/* Header elements */
+body.dark #d_header_title,
+body.dark .subtitle,
+body.dark h1,
+body.dark h2,
+body.dark div.h1,
+body.dark div.h2 {
+    color: var(--body-text-color) !important;
+    font-weight: 600 !important;
+}
+
+body.dark .subtitle {
+    border-bottom: 2px solid var(--border-color) !important;
+    padding-bottom: 8px !important;
+}
+
+/* Dialog improvements */
+body.dark .dialog_title {
+    background: linear-gradient(180deg, #21262d 0%, #1c2128 100%) !important;
+    border-color: var(--border-color) !important;
+    color: var(--body-text-color) !important;
+}
+
+body.dark .dialog_content {
+    background: var(--background-color) !important;
+}
+
+body.dark .dialog_buttons {
+    background: var(--box-background-color) !important;
+    border-color: var(--border-color) !important;
+}
+
+/* Invalid input with pulse */
+@keyframes invalidPulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(248, 81, 73, 0.4);
+        border-color: var(--error-color);
+    }
+    50% {
+        box-shadow: 0 0 0 6px rgba(248, 81, 73, 0);
+        border-color: #da3633;
+    }
+}
+
+body.dark .invalid {
+    animation: invalidPulse 2s ease-in-out !important;
+    border-color: var(--error-color) !important;
+}
+
+/* Footer */
+body.dark #d_footer {
+    color: var(--header-text-color) !important;
+    opacity: 0.7 !important;
+}
+
+body.dark #d_footer a {
+    color: var(--label-color) !important;
+}
+
+body.dark #d_footer a:hover {
+    color: var(--highlight-color) !important;
+}
+    `;
+
+    GM_addStyle(darkCSS);
+
+    function applyDark() {
+        if (document.body) {
+            document.body.classList.add('dark');
+            console.log('✨ Premium Dark Mode activated!');
+        }
+    }
+
+    applyDark();
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', applyDark);
+    }
+
+    const observer = new MutationObserver(() => {
+        if (!document.body.classList.contains('dark')) {
+            document.body.classList.add('dark');
+        }
+    });
+
+    const checkBody = setInterval(() => {
+        if (document.body) {
+            observer.observe(document.body, {
+                attributes: true,
+                attributeFilter: ['class']
+            });
+            clearInterval(checkBody);
+        }
+    }, 10);
+
+})();
